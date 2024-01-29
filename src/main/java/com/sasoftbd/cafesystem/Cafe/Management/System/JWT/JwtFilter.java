@@ -2,6 +2,7 @@ package com.sasoftbd.cafesystem.Cafe.Management.System.JWT;
 
 
 import io.jsonwebtoken.Claims;
+import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,9 +15,10 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 @Component
-public class JwtFilter extends OncePerRequestFilter{
+public class JwtFilter extends OncePerRequestFilter {
 
     @Autowired
     private JwtUtils jwtUtils;
@@ -30,20 +32,23 @@ public class JwtFilter extends OncePerRequestFilter{
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-                if(request.getServletPath().matches("/user/login|/user/forgotPassword|/user/signup")){
+        //|/user/signup
+        if (request.getServletPath().matches("/user/login|/user/forgotPassword")) {
             filterChain.doFilter(request, response);
-        }else {
+            System.out.println("call if");
+        } else {
+            System.out.println("call this");
             String authorizationHeader = request.getHeader("Authorization");
             String token = null;
-            if(authorizationHeader != null && authorizationHeader.startsWith("Bearer")){
+            if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
                 token = authorizationHeader.substring(7);
                 UserName = jwtUtils.extractUsername(token);
                 claims = jwtUtils.extractAllClaims(token);
             }
 
-            if(UserName != null && SecurityContextHolder.getContext().getAuthentication() == null){
+            if (UserName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = service.loadUserByUsername(UserName);
-                if(jwtUtils.validateToken(token, userDetails)){
+                if (jwtUtils.validateToken(token, userDetails)) {
                     UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails,
                             null, userDetails.getAuthorities());
 
@@ -55,14 +60,15 @@ public class JwtFilter extends OncePerRequestFilter{
         }
     }
 
-    public boolean isAdmin(){
+    public boolean isAdmin() {
         return "admin".equalsIgnoreCase((String) claims.get("role"));
     }
 
-    public boolean isUser(){
+    public boolean isUser() {
         return "user".equalsIgnoreCase((String) claims.get("role"));
     }
-    public String getCurrentUser(){
+
+    public String getCurrentUser() {
         return UserName;
     }
 }

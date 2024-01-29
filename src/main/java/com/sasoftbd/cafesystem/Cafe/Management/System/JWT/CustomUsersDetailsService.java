@@ -29,4 +29,13 @@ public class CustomUsersDetailsService implements UserDetailsService {
             throw  new UsernameNotFoundException("User Not Found ");
         }
     }
+
+    public User getUserDetail(){
+        return userDetail;
+
+//        User user = userDetail;
+//        user.setPassword(null);
+//        return userDetail;
+
+    }
 }
