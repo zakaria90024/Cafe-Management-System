@@ -1,12 +1,14 @@
 package com.sasoftbd.cafesystem.Cafe.Management.System.serviceimpl;
 
 import com.sasoftbd.cafesystem.Cafe.Management.System.JWT.CustomUsersDetailsService;
+import com.sasoftbd.cafesystem.Cafe.Management.System.JWT.JwtFilter;
 import com.sasoftbd.cafesystem.Cafe.Management.System.JWT.JwtUtils;
 import com.sasoftbd.cafesystem.Cafe.Management.System.POJO.User;
 import com.sasoftbd.cafesystem.Cafe.Management.System.constents.CafeConstants;
 import com.sasoftbd.cafesystem.Cafe.Management.System.dao.UserDao;
 import com.sasoftbd.cafesystem.Cafe.Management.System.service.UserService;
 import com.sasoftbd.cafesystem.Cafe.Management.System.utils.CafeUtils;
+import com.sasoftbd.cafesystem.Cafe.Management.System.wrapper.UserWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.juli.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +19,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -35,6 +36,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     JwtUtils jwtUtils;
+
+    @Autowired
+    JwtFilter jwtFilter;
 
 
     @Override
@@ -80,6 +84,45 @@ public class UserServiceImpl implements UserService {
         }
 
         return new ResponseEntity<>("{\"message\":\"Bad Credential\"}", HttpStatus.BAD_REQUEST);
+    }
+
+    @Override
+    public ResponseEntity<List<UserWrapper>> getAllUser() {
+
+        try {
+            if (jwtFilter.isAdmin()) {
+                return new ResponseEntity<>(userDao.getAllUser(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(new ArrayList<>(), HttpStatus.UNAUTHORIZED);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<String> updateRole(Map<String, String> requestMap) {
+
+        try {
+
+            if (jwtFilter.isAdmin()) {
+                Optional<User> optional = userDao.findById(Integer.getInteger(requestMap.get("id")));
+                if (!optional.isEmpty()) {
+                    userDao.updateStatus(requestMap.get("status"), Integer.parseInt(requestMap.get("id")));
+                    return CafeUtils.getResponseEntity("Updated Successfully", HttpStatus.OK);
+                } else {
+                    CafeUtils.getResponseEntity("User id not exist", HttpStatus.OK);
+                }
+                //return new ResponseEntity<>(userDao.getAllUser(), HttpStatus.OK);
+            } else {
+                return CafeUtils.getResponseEntity(CafeConstants.UNAUTHORIZED_ACCESS, HttpStatus.UNAUTHORIZED);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WANT_WRONG, HttpStatus.BAD_REQUEST);
     }
 
     private boolean validDateSignUpMap(Map<String, String> requestMap) {
