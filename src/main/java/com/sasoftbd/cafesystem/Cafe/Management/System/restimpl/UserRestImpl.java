@@ -25,11 +25,8 @@ public class UserRestImpl implements UserRest {
         }catch (Exception e){
             e.printStackTrace();
         }
-
         return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WANT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
-
         //return  new ResponseEntity<String>("{\"message\" : \"Something Went Wrong\"}", HttpStatus.INTERNAL_SERVER_ERROR);
-
     }
 
     @Override
@@ -39,7 +36,6 @@ public class UserRestImpl implements UserRest {
         }catch (Exception e){
             e.printStackTrace();
         }
-
         return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WANT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
