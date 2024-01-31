@@ -43,8 +43,6 @@ public class User implements Serializable {
     @Column(name = "role")
     private  String role;
 
-
-
 //    public User(String email, String password, ArrayList<Object> objects) {
 //        this.email = email;
 //        this.password = password;
@@ -52,7 +50,7 @@ public class User implements Serializable {
 //
 //    }
 
-    //just use @Data anottation
+//    just use @Data anottation
 //    public User(String name, String email, String password, String status, String role) {
 //        this.name = name;
 //        this.email = email;
