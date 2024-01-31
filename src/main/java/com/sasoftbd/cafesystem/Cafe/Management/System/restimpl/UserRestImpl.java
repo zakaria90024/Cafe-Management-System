@@ -60,7 +60,7 @@ public class UserRestImpl implements UserRest {
     public ResponseEntity<String> update(Map<String, String> requestMap) {
 
         try {
-            return userService.updateRole(requestMap);
+            return userService.update(requestMap);
         }catch (Exception e){
             e.printStackTrace();
         }

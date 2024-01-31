@@ -8,6 +8,7 @@ import com.sasoftbd.cafesystem.Cafe.Management.System.constents.CafeConstants;
 import com.sasoftbd.cafesystem.Cafe.Management.System.dao.UserDao;
 import com.sasoftbd.cafesystem.Cafe.Management.System.service.UserService;
 import com.sasoftbd.cafesystem.Cafe.Management.System.utils.CafeUtils;
+import com.sasoftbd.cafesystem.Cafe.Management.System.utils.EmailUtils;
 import com.sasoftbd.cafesystem.Cafe.Management.System.wrapper.UserWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.juli.logging.Log;
@@ -39,6 +40,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     JwtFilter jwtFilter;
+
+    @Autowired
+    EmailUtils emailUtils;
 
 
     @Override
@@ -102,14 +106,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<String> updateRole(Map<String, String> requestMap) {
-
+    public ResponseEntity<String> update(Map<String, String> requestMap) {
         try {
 
             if (jwtFilter.isAdmin()) {
-                Optional<User> optional = userDao.findById(Integer.getInteger(requestMap.get("id")));
+                Optional<User> optional = userDao.findById(Integer.parseInt(requestMap.get("id")));
                 if (!optional.isEmpty()) {
                     userDao.updateStatus(requestMap.get("status"), Integer.parseInt(requestMap.get("id")));
+
+                    sendMailToAllAdmin(requestMap.get("status"), optional.get().getEmail(), userDao.getAllAdmin());
+
                     return CafeUtils.getResponseEntity("Updated Successfully", HttpStatus.OK);
                 } else {
                     CafeUtils.getResponseEntity("User id not exist", HttpStatus.OK);
@@ -124,6 +130,23 @@ public class UserServiceImpl implements UserService {
         }
         return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WANT_WRONG, HttpStatus.BAD_REQUEST);
     }
+
+    private void sendMailToAllAdmin(String status, String user, List<String> allAdmin) {
+        allAdmin.remove(jwtFilter.getCurrentUser());
+
+        if(status != null && status.equalsIgnoreCase("true")){
+            emailUtils.sendSimpleMessage(jwtFilter.getCurrentUser(), "Account approved", "User "+user+"by Admin"+jwtFilter.getCurrentUser(),allAdmin);
+        }else {
+            emailUtils.sendSimpleMessage(jwtFilter.getCurrentUser(), "Account Disable", "User "+user+"by Admin"+jwtFilter.getCurrentUser(),allAdmin);
+
+        }
+    }
+
+//    @Override
+//    public ResponseEntity<String> updateRole(Map<String, String> requestMap) {
+//
+//
+//    }
 
     private boolean validDateSignUpMap(Map<String, String> requestMap) {
         if (requestMap.containsKey("name") && requestMap.containsKey("contact_number") && requestMap.containsKey("email") &&
