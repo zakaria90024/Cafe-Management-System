@@ -114,7 +114,7 @@ public class UserServiceImpl implements UserService {
                 if (!optional.isEmpty()) {
                     userDao.updateStatus(requestMap.get("status"), Integer.parseInt(requestMap.get("id")));
 
-                    sendMailToAllAdmin(requestMap.get("status"), optional.get().getEmail(), userDao.getAllAdmin());
+                    //sendMailToAllAdmin(requestMap.get("status"), optional.get().getEmail(), userDao.getAllAdmin());
 
                     return CafeUtils.getResponseEntity("Updated Successfully", HttpStatus.OK);
                 } else {
@@ -129,6 +129,11 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
         }
         return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WANT_WRONG, HttpStatus.BAD_REQUEST);
+    }
+
+    @Override
+    public ResponseEntity<String> chectToken() {
+        return null;
     }
 
     private void sendMailToAllAdmin(String status, String user, List<String> allAdmin) {
