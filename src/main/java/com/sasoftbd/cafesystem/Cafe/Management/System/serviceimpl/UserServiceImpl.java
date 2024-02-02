@@ -12,6 +12,7 @@ import com.sasoftbd.cafesystem.Cafe.Management.System.utils.EmailUtils;
 import com.sasoftbd.cafesystem.Cafe.Management.System.wrapper.UserWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.juli.logging.Log;
+import org.assertj.core.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -131,18 +132,14 @@ public class UserServiceImpl implements UserService {
         return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WANT_WRONG, HttpStatus.BAD_REQUEST);
     }
 
-    @Override
-    public ResponseEntity<String> chectToken() {
-        return null;
-    }
 
     private void sendMailToAllAdmin(String status, String user, List<String> allAdmin) {
         allAdmin.remove(jwtFilter.getCurrentUser());
 
-        if(status != null && status.equalsIgnoreCase("true")){
-            emailUtils.sendSimpleMessage(jwtFilter.getCurrentUser(), "Account approved", "User "+user+"by Admin"+jwtFilter.getCurrentUser(),allAdmin);
-        }else {
-            emailUtils.sendSimpleMessage(jwtFilter.getCurrentUser(), "Account Disable", "User "+user+"by Admin"+jwtFilter.getCurrentUser(),allAdmin);
+        if (status != null && status.equalsIgnoreCase("true")) {
+            emailUtils.sendSimpleMessage(jwtFilter.getCurrentUser(), "Account approved", "User " + user + "by Admin" + jwtFilter.getCurrentUser(), allAdmin);
+        } else {
+            emailUtils.sendSimpleMessage(jwtFilter.getCurrentUser(), "Account Disable", "User " + user + "by Admin" + jwtFilter.getCurrentUser(), allAdmin);
 
         }
     }
@@ -172,4 +169,45 @@ public class UserServiceImpl implements UserService {
         return user;
 
     }
+
+
+    @Override
+    public ResponseEntity<String> checkToken() {
+        return CafeUtils.getResponseEntity("true", HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<String> changePassword(Map<String, String> requestMap) {
+        try {
+            User userObj = userDao.findByEmail(jwtFilter.getCurrentUser());
+            if (!userObj.equals(null)) {
+                if (userObj.getPassword().equals(requestMap.get("oldPassword"))) {
+                    userObj.setPassword(requestMap.get("newPassword"));
+                    userDao.save(userObj);
+                    return CafeUtils.getResponseEntity("Password Updated Successfully", HttpStatus.OK);
+                }
+                return CafeUtils.getResponseEntity("Incorrect Old Password", HttpStatus.BAD_REQUEST);
+            }
+            return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WANT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WANT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<String> forgetPassword(Map<String, String> requestMap) {
+        try {
+            User userObj = userDao.findByEmail(requestMap.get("email"));
+            if (!Objects.isNull(userObj) && !Strings.isNullOrEmpty(userObj.getEmail()))
+                emailUtils.forgetMail(userObj.getEmail(), "Credentials for Cafe Management System ", userObj.getPassword());
+            return CafeUtils.getResponseEntity("Check Your Mail For Credentials", HttpStatus.OK);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WANT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }

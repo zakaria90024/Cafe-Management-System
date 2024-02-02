@@ -72,11 +72,32 @@ public class UserRestImpl implements UserRest {
     @Override
     public ResponseEntity<String> checkToken() {
         try {
-            return userService.chectToken();
+            return userService.checkToken();
         }catch (Exception e){
             e.printStackTrace();
         }
         return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WANT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
 
+    }
+
+    @Override
+    public ResponseEntity<String> changePassword(Map<String, String> requestMap) {
+        try {
+            return userService.changePassword(requestMap);
+        }catch (Exception e){
+
+        }
+        return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WANT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+
+    }
+
+    @Override
+    public ResponseEntity<String> forgetPassword(Map<String, String> requestMap) {
+        try {
+            return userService.forgetPassword(requestMap);
+        }catch (Exception e){
+
+        }
+        return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WANT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
