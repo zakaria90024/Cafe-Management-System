@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 @Slf4j
 @Service
@@ -40,13 +42,15 @@ public class CategoryServiceImpl implements CategoryService {
         return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WANT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+
+
     private boolean validateCategoryMap(Map<String, String> requestMap, boolean validate) {
         if(requestMap.containsKey("name")){
             if(requestMap.containsKey("id") && validate){
                 return true;
             }
             else if (!validate) {
-                return  true;
+                return true;
             }
         }
         return false;
@@ -59,5 +63,16 @@ public class CategoryServiceImpl implements CategoryService {
         }
         category.setName(requestMap.get("name"));
         return category;
+    }
+
+
+    @Override
+    public ResponseEntity<List<Category>> getAllCategory(String filterValue) {
+        try {
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return new ResponseEntity<List<Category>>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

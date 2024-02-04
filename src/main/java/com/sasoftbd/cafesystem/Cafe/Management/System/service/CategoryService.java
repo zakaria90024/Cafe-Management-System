@@ -1,5 +1,6 @@
 package com.sasoftbd.cafesystem.Cafe.Management.System.service;
 
+import com.sasoftbd.cafesystem.Cafe.Management.System.POJO.Category;
 import com.sasoftbd.cafesystem.Cafe.Management.System.wrapper.UserWrapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,4 +20,6 @@ public interface CategoryService {
 //    ResponseEntity<String> forgetPassword(Map<String, String> requestMap);
 
     ResponseEntity<String> addNewCategory(Map<String, String> requestMap);
+
+    ResponseEntity<List<Category>> getAllCategory(String filterValue);
 }

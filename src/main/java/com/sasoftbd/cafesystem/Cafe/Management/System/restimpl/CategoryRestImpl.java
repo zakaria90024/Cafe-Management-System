@@ -1,5 +1,6 @@
 package com.sasoftbd.cafesystem.Cafe.Management.System.restimpl;
 
+import com.sasoftbd.cafesystem.Cafe.Management.System.POJO.Category;
 import com.sasoftbd.cafesystem.Cafe.Management.System.constents.CafeConstants;
 import com.sasoftbd.cafesystem.Cafe.Management.System.rest.CategoryRest;
 import com.sasoftbd.cafesystem.Cafe.Management.System.service.CategoryService;
@@ -9,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -26,5 +29,15 @@ public class CategoryRestImpl implements CategoryRest {
             e.printStackTrace();
         }
         return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WANT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<List<Category>> getAllCategory(String filterValue) {
+        try {
+            return categoryService.getAllCategory(filterValue);
+        }catch (Exception e){
+
+        }
+        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
