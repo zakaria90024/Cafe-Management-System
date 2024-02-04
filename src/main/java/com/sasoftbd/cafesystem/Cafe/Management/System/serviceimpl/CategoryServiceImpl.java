@@ -7,6 +7,7 @@ import com.sasoftbd.cafesystem.Cafe.Management.System.dao.CategoryDao;
 import com.sasoftbd.cafesystem.Cafe.Management.System.service.CategoryService;
 import com.sasoftbd.cafesystem.Cafe.Management.System.utils.CafeUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -69,7 +70,12 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public ResponseEntity<List<Category>> getAllCategory(String filterValue) {
         try {
-
+            if (!Strings.isNullOrEmpty(filterValue) && filterValue.equalsIgnoreCase("true")){
+                log.info("Inside If");
+                return new ResponseEntity<List<Category>>(categoryDao.getAllCategory(), HttpStatus.OK);
+            }
+            log.info("Out If");
+            return new ResponseEntity<>(categoryDao.findAll(), HttpStatus.OK);
         }catch (Exception e){
             e.printStackTrace();
         }
