@@ -48,8 +48,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-
-
     private boolean validateProductMap(Map<String, String> requestMap, boolean validate) {
         if (requestMap.containsKey("name")) {
             if (requestMap.containsKey("id") && validate) {
@@ -131,9 +129,69 @@ public class ProductServiceImpl implements ProductService {
     public ResponseEntity<List<ProductWrapper>> getAllProduct() {
         try {
             return new ResponseEntity(productDao.getAllProduct(), HttpStatus.OK);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return new  ResponseEntity(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<String> updateProduct(Map<String, String> requestMap) {
+        try {
+            if (jwtFilter.isAdmin()) {
+                if (validateProductMap(requestMap, true)) {
+
+                    Optional<Product> optional = productDao.findById(Integer.parseInt(requestMap.get("id")));
+
+                    if (!optional.isEmpty()) {
+                        Product product = getProductFromMap(requestMap, true);
+                        product.setStatus(optional.get().getStatus());
+                        productDao.save(product);
+
+                        return CafeUtils.getResponseEntity("Product Update Successfully", HttpStatus.OK);
+
+                    } else {
+                        return CafeUtils.getResponseEntity("Product Id Not Match", HttpStatus.OK);
+                    }
+
+                }
+                return CafeUtils.getResponseEntity(CafeConstants.INVALID_DATA, HttpStatus.BAD_REQUEST);
+            } else {
+                return CafeUtils.getResponseEntity(CafeConstants.UNAUTHORIZED_ACCESS, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WANT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<String> deleteProduct(Integer id) {
+        try {
+            if (jwtFilter.isAdmin()) {
+
+
+                Optional<Product> optional = productDao.findById(id);
+
+                if (!optional.isEmpty()) {
+
+                    productDao.deleteById(id);
+
+                    return CafeUtils.getResponseEntity("Delete Successfully", HttpStatus.OK);
+
+                } else {
+                    return CafeUtils.getResponseEntity("Delete Id Not Match", HttpStatus.OK);
+                }
+
+
+            } else {
+                return CafeUtils.getResponseEntity(CafeConstants.UNAUTHORIZED_ACCESS, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WANT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

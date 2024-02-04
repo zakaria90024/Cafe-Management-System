@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 @RequestMapping(path = "/product")
 public interface ProductRest {
     @PostMapping(path = "/add")
@@ -15,8 +17,11 @@ public interface ProductRest {
 
     @GetMapping(path = "/get")
     ResponseEntity<List<ProductWrapper>> getAllProduct();
-//
-//    @PostMapping(path = "/update")
-//    ResponseEntity<String> updateProduct(@RequestBody(required = true) Map<String, String> requestMap);
+
+    @PostMapping(path = "/update")
+    ResponseEntity<String> updateProduct(@RequestBody(required = true) Map<String, String> requestMap);
+
+    @PostMapping(path = "/delete/{id}")
+    ResponseEntity<String> deleteProduct(@PathVariable Integer id);
 
 }
