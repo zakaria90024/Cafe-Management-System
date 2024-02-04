@@ -144,12 +144,6 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-//    @Override
-//    public ResponseEntity<String> updateRole(Map<String, String> requestMap) {
-//
-//
-//    }
-
     private boolean validDateSignUpMap(Map<String, String> requestMap) {
         if (requestMap.containsKey("name") && requestMap.containsKey("contact_number") && requestMap.containsKey("email") &&
                 requestMap.containsKey("password") && requestMap.containsKey("status") && requestMap.containsKey("role")) {

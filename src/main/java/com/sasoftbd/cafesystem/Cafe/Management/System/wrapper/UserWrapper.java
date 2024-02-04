@@ -13,8 +13,6 @@ public class UserWrapper {
     private String contactNumber;
     private String status;
 
-
-
     public UserWrapper(Integer id, String name, String email, String contactNumber, String staus) {
         this.id = id;
         this.name = name;

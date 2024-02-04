@@ -80,51 +80,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-//
-//    @Override
-//    public ResponseEntity<List<Category>> getAllCategory(String filterValue) {
-//        try {
-//            if (!Strings.isNullOrEmpty(filterValue) && filterValue.equalsIgnoreCase("true")){
-//                log.info("Inside If");
-//                return new ResponseEntity<List<Category>>(categoryDao.getAllCategory(), HttpStatus.OK);
-//            }
-//            log.info("Out If");
-//            return new ResponseEntity<>(categoryDao.findAll(), HttpStatus.OK);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//        return new ResponseEntity<List<Category>>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
-//
-//    @Override
-//    public ResponseEntity<String> updateCategory(Map<String, String> requestMap) {
-//
-//        try {
-//            if(jwtFilter.isAdmin()){
-//                if(validateCategoryMap(requestMap, true)){
-//                    Optional<Category> optional = categoryDao.findById(Integer.parseInt(requestMap.get("id")));
-//
-//                    if (!optional.isEmpty()){
-//                        categoryDao.save(getCategoryFromMap(requestMap, true));
-//                        return CafeUtils.getResponseEntity("Category Update Successfully", HttpStatus.OK);
-//
-//                    }else {
-//                        return CafeUtils.getResponseEntity("Category Id Not Match", HttpStatus.OK);
-//                    }
-//
-//                }
-//                return CafeUtils.getResponseEntity(CafeConstants.INVALID_DATA, HttpStatus.BAD_REQUEST);
-//            }else {
-//                return CafeUtils.getResponseEntity(CafeConstants.UNAUTHORIZED_ACCESS, HttpStatus.INTERNAL_SERVER_ERROR);
-//            }
-//
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//        return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WANT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
-
-
     @Override
     public ResponseEntity<List<ProductWrapper>> getAllProduct() {
         try {
