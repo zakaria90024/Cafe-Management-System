@@ -1,6 +1,7 @@
 package com.sasoftbd.cafesystem.Cafe.Management.System.serviceimpl;
 
 import com.sasoftbd.cafesystem.Cafe.Management.System.JWT.JwtFilter;
+import com.sasoftbd.cafesystem.Cafe.Management.System.POJO.Bill;
 import com.sasoftbd.cafesystem.Cafe.Management.System.constents.CafeConstants;
 import com.sasoftbd.cafesystem.Cafe.Management.System.dao.BillDao;
 import com.sasoftbd.cafesystem.Cafe.Management.System.service.BillService;
@@ -127,6 +128,13 @@ public class BillServiceImpl implements BillService {
     }
 
     private void insertBill(Map<String, Object> requestMap) {
-        
+        try{
+            Bill bill = new Bill();
+//            bill.setUuid((String) requestMap.get("uuid"));
+//            bill.setName(requestMap.get("name"));
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
