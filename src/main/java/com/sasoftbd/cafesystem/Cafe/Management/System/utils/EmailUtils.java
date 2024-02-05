@@ -52,7 +52,5 @@ public class EmailUtils {
        message.setContent(htmlMsg, "text/html");
        mailSender.send(message);
 
-
-
     }
 }
