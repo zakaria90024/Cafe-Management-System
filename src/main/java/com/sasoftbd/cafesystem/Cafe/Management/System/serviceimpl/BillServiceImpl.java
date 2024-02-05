@@ -113,7 +113,9 @@ public class BillServiceImpl implements BillService {
                 if(requestMap.containsKey("isGenerate") && !(Boolean)requestMap.get("isGenerate")){
                     fileName = (String) requestMap.get("uuid");
                 }else {
-                  
+                    fileName = CafeUtils.getUUID();
+                    requestMap.put("uuid", fileName);
+                    insertBill(requestMap);
                 }
 
                 return CafeUtils.getResponseEntity("Required Data Not Found", HttpStatus.BAD_REQUEST);
@@ -122,5 +124,9 @@ public class BillServiceImpl implements BillService {
             e.printStackTrace();
         }
         return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WANT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    private void insertBill(Map<String, Object> requestMap) {
+        
     }
 }
