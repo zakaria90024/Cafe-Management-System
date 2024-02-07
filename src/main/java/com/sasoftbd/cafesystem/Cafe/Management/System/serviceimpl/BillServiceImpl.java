@@ -130,8 +130,13 @@ public class BillServiceImpl implements BillService {
     private void insertBill(Map<String, Object> requestMap) {
         try{
             Bill bill = new Bill();
-//            bill.setUuid((String) requestMap.get("uuid"));
-//            bill.setName(requestMap.get("name"));
+            bill.setUuid((String) requestMap.get("uuid"));
+            bill.setName((String) requestMap.get("name"));
+            bill.setEmail((String) requestMap.get("email"));
+            bill.setContactNumber((String) requestMap.get("contactNumber"));
+            bill.setPaymentMethod((String) requestMap.get("paymentMethod"));
+            bill.setTotal(Integer.parseInt((String) requestMap.get("totalAmount")));
+            bill.setProductDetails((String)requestMap.get("") );
 
         }catch (Exception e){
             e.printStackTrace();
