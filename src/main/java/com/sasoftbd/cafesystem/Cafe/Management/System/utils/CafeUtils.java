@@ -2,17 +2,20 @@ package com.sasoftbd.cafesystem.Cafe.Management.System.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.util.Strings;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.jar.JarException;
 
+@Slf4j
 public class CafeUtils {
     private CafeUtils() {
 
@@ -42,5 +45,17 @@ public class CafeUtils {
         }
         return new HashMap<>();
     }
+
+    public static Boolean isFileExist(String path){
+        log.info("insede FileExist", path);
+        try {
+            File file = new File(path);
+            return (file != null && file.exists()) ? Boolean.TRUE : Boolean.FALSE;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 
 }
