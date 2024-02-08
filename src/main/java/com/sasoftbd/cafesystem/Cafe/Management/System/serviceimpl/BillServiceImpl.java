@@ -30,81 +30,6 @@ public class BillServiceImpl implements BillService {
     @Autowired
     JwtFilter jwtFilter;
 
-    //
-//    @Override
-//    public ResponseEntity<String> addNewCategory(Map<String, String> requestMap) {
-//        try {
-//            if(jwtFilter.isAdmin()){
-//                if(validateCategoryMap(requestMap, false)){
-//                    categoryDao.save(getCategoryFromMap(requestMap, false));
-//                    return CafeUtils.getResponseEntity("Category Added Successfully", HttpStatus.OK);
-//                }
-//            }else {
-//                return CafeUtils.getResponseEntity(CafeConstants.UNAUTHORIZED_ACCESS, HttpStatus.INTERNAL_SERVER_ERROR);
-//            }
-//
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//        return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WANT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
-//
-//
-//
-
-//    private Category getCategoryFromMap(Map<String, String> requestMap, Boolean isAdd){
-//        Category category = new Category();
-//        if(isAdd){
-//            category.setId(Integer.parseInt(requestMap.get("id")));
-//        }
-//        category.setName(requestMap.get("name"));
-//        return category;
-//    }
-//
-//
-//    @Override
-//    public ResponseEntity<List<Category>> getAllCategory(String filterValue) {
-//        try {
-//            if (!Strings.isNullOrEmpty(filterValue) && filterValue.equalsIgnoreCase("true")){
-//                log.info("Inside If");
-//                return new ResponseEntity<List<Category>>(categoryDao.getAllCategory(), HttpStatus.OK);
-//            }
-//            log.info("Out If");
-//            return new ResponseEntity<>(categoryDao.findAll(), HttpStatus.OK);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//        return new ResponseEntity<List<Category>>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
-//
-//    @Override
-//    public ResponseEntity<String> updateCategory(Map<String, String> requestMap) {
-//
-//        try {
-//            if(jwtFilter.isAdmin()){
-//                if(validateCategoryMap(requestMap, true)){
-//                    Optional<Category> optional = categoryDao.findById(Integer.parseInt(requestMap.get("id")));
-//
-//                    if (!optional.isEmpty()){
-//                        categoryDao.save(getCategoryFromMap(requestMap, true));
-//                        return CafeUtils.getResponseEntity("Category Update Successfully", HttpStatus.OK);
-//
-//                    }else {
-//                        return CafeUtils.getResponseEntity("Category Id Not Match", HttpStatus.OK);
-//                    }
-//
-//                }
-//                return CafeUtils.getResponseEntity(CafeConstants.INVALID_DATA, HttpStatus.BAD_REQUEST);
-//            }else {
-//                return CafeUtils.getResponseEntity(CafeConstants.UNAUTHORIZED_ACCESS, HttpStatus.INTERNAL_SERVER_ERROR);
-//            }
-//
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//        return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WANT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
-
     @Override
     public ResponseEntity<String> generateReport(Map<String, Object> requestMap) {
         try {
@@ -118,12 +43,12 @@ public class BillServiceImpl implements BillService {
                     insertBill(requestMap);
                 }
 
-                String data = "Name: "+requestMap.get("name") +"\n"+"Contact Number: "+requestMap.get("contactNumber") +
-                        "\n"+"Email: "+requestMap.get("email")+"\n" + "Payment Method: "+requestMap.get("paymentMethod");
+                String data = "Name: " + requestMap.get("name") + "\n" + "Contact Number: " + requestMap.get("contactNumber") +
+                        "\n" + "Email: " + requestMap.get("email") + "\n" + "Payment Method: " + requestMap.get("paymentMethod");
 
 
                 Document document = new com.itextpdf.text.Document();
-                PdfWriter.getInstance(document, new FileOutputStream(CafeConstants.STORE_LOCATION+"\\"+fileName+".pdf"));
+                PdfWriter.getInstance(document, new FileOutputStream(CafeConstants.STORE_LOCATION + "\\" + fileName + ".pdf"));
                 document.open();
 
                 setRactangleInPdf(document);
@@ -134,7 +59,7 @@ public class BillServiceImpl implements BillService {
                 document.add(chunk);
 
 
-                Paragraph paragraph = new Paragraph(data+ "\n \n", getFont("Data"));
+                Paragraph paragraph = new Paragraph(data + "\n \n", getFont("Data"));
                 document.add(paragraph);
 
                 PdfPTable table = new PdfPTable(5);
@@ -143,16 +68,16 @@ public class BillServiceImpl implements BillService {
 
                 JSONArray jsonArray = CafeUtils.getJsonArrayFormString((String) requestMap.get("productDetails"));
 
-                for (int i = 0; i < jsonArray.length(); i++){
+                for (int i = 0; i < jsonArray.length(); i++) {
                     addRows(table, CafeUtils.getMapFromJson(jsonArray.getString(i)));
                 }
 
                 document.add(table);
 
-                Paragraph footer = new Paragraph("Total : "+requestMap.get("totalAmount")+"\n"+"Thank you for visiting. please visit again", getFont("Data"));
+                Paragraph footer = new Paragraph("Total : " + requestMap.get("totalAmount") + "\n" + "Thank you for visiting. please visit again", getFont("Data"));
                 document.add(footer);
                 document.close();
-                return new ResponseEntity<>("{\"uuid\":\""+fileName+"\"}", HttpStatus.OK);
+                return new ResponseEntity<>("{\"uuid\":\"" + fileName + "\"}", HttpStatus.OK);
 
 
             }
@@ -174,7 +99,7 @@ public class BillServiceImpl implements BillService {
 
     private void addTableHeader(PdfPTable table) {
         log.info("Inside AddTableHeader");
-        Stream.of("Name, Category", "Quantity", "Price", "Sub Total").forEach(columnTitle->{
+        Stream.of("Name, Category", "Quantity", "Price", "Sub Total").forEach(columnTitle -> {
             PdfPCell header = new PdfPCell();
             header.setBackgroundColor(BaseColor.LIGHT_GRAY);
             header.setBorderWidth(2);
@@ -199,7 +124,7 @@ public class BillServiceImpl implements BillService {
 
     }
 
-    private Font getFont(String type){
+    private Font getFont(String type) {
         log.info("inside getfont");
         switch (type) {
             case "Header":

@@ -22,36 +22,6 @@ public class BillRestImpl implements BillRest {
 
     @Autowired
     BillService billService;
-//
-//    @Override
-//    public ResponseEntity<String> addNewCategory(Map<String, String> requestMap) {
-//        try {
-//            return categoryService.addNewCategory(requestMap);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//        return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WANT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
-//
-//    @Override
-//    public ResponseEntity<List<Category>> getAllCategory(String filterValue) {
-//        try {
-//            return categoryService.getAllCategory(filterValue);
-//        }catch (Exception e){
-//
-//        }
-//        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
-//
-//    @Override
-//    public ResponseEntity<String> updateCategory(Map<String, String> requestMap) {
-//        try {
-//            return categoryService.updateCategory(requestMap);
-//        }catch (Exception e){
-//
-//        }
-//        return CafeUtils.getResponseEntity(CafeConstants.SOMETHING_WANT_WRONG, HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
 
     @Override
     public ResponseEntity<String> generateReport(Map<String, Object> requestMap) {

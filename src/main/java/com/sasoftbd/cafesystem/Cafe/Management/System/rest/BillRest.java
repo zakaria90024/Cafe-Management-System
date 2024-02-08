@@ -11,11 +11,5 @@ import java.util.Map;
 public interface BillRest {
     @PostMapping(path = "/generateReport")
     ResponseEntity<String> generateReport(@RequestBody(required = true)Map<String, Object> requestMap);
-
-//    @GetMapping(path = "/get")
-//    ResponseEntity<List<Category>> getAllCategory(@RequestParam(required = true) String filterValue);
-//
-//    @PostMapping(path = "/update")
-//    ResponseEntity<String> updateCategory(@RequestBody(required = true) Map<String, String> requestMap);
-
+    
 }
