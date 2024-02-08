@@ -71,14 +71,13 @@ public class BillServiceImpl implements BillService {
                 for (int i = 0; i < jsonArray.length(); i++) {
                     addRows(table, CafeUtils.getMapFromJson(jsonArray.getString(i)));
                 }
-
                 document.add(table);
+
 
                 Paragraph footer = new Paragraph("Total : " + requestMap.get("totalAmount") + "\n" + "Thank you for visiting. please visit again", getFont("Data"));
                 document.add(footer);
                 document.close();
                 return new ResponseEntity<>("{\"uuid\":\"" + fileName + "\"}", HttpStatus.OK);
-
 
             }
             return CafeUtils.getResponseEntity("Required Data Not Found", HttpStatus.BAD_REQUEST);
@@ -99,7 +98,7 @@ public class BillServiceImpl implements BillService {
 
     private void addTableHeader(PdfPTable table) {
         log.info("Inside AddTableHeader");
-        Stream.of("Name, Category", "Quantity", "Price", "Sub Total").forEach(columnTitle -> {
+        Stream.of("Name", "Category", "Quantity", "Price", "SubTotal").forEach(columnTitle -> {
             PdfPCell header = new PdfPCell();
             header.setBackgroundColor(BaseColor.LIGHT_GRAY);
             header.setBorderWidth(2);
