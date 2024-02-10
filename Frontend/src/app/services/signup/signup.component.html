@@ -77,11 +77,10 @@
   </form>
 </mat-dialog-content>
 
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" type="submit" (click)="handleSubmit()" [disabled]="validateSubmit() || !(signupForm.valid && signupForm.dirty)">
+    <mat-icon>Save</mat-icon> Signup
 
-<!--<mat-dialog-actions align="end">-->
-<!--  <button mat-raised-button color="primary" type="submit" (click)="handleSubmit()" [disabled]="validateSubmit() || !(signupForm.valid && signupForm.dirty)">-->
-<!--    <mat-icon>Save</mat-icon> Signup-->
-
-<!--  </button>-->
-<!--&lt;!&ndash;  <button mat-raised-button color="warm" mat-dialog-close><mat-icon>cancel</mat-icon>Close</button>&ndash;&gt;-->
-<!--</mat-dialog-actions>-->
+  </button>
+<!--  <button mat-raised-button color="warm" mat-dialog-close><mat-icon>cancel</mat-icon>Close</button>-->
+</mat-dialog-actions>
