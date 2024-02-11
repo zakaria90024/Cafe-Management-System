@@ -33,14 +33,16 @@ export class SignupComponent implements OnInit {
     this.signupForm = this.formBuilder.group({
       name: [null, [Validators.required, Validators.pattern(GlobalConstants.nameRegex)]],
       email: [null, [Validators.required, Validators.pattern(GlobalConstants.emailRegex)]],
-      contactNumber: [null, [Validators.required, Validators.pattern(GlobalConstants.contactNumberRegex)]],
+      contact_number: [null, [Validators.required, Validators.pattern(GlobalConstants.contactNumberRegex)]],
       password: [null, [Validators.required]],
-      confirmPassword: [null, [Validators.required]]
+      confirmPassword: [null, [Validators.required]],
+      role:"MPO",
+      status:"true"
     })
   }
 
   validateSubmit() {
-    if (this.signupForm.control['password'].value != this.signupForm.controls['confirmpassword'].value) {
+    if (this.signupForm.controls['password'].value != this.signupForm.controls['confirmPassword'].value) {
       return true;
     } else {
       return false;
@@ -54,8 +56,11 @@ export class SignupComponent implements OnInit {
     var data = {
       name: formData.name,
       email: formData.email,
-      contactNumber: formData.contactNumber,
-      password: formData.password
+      contact_number: formData.contact_number,
+      password: formData.password,
+      role:"MPO",
+      status:"true"
+
     }
 
     this.userService.signup(data).subscribe((response: any) => {

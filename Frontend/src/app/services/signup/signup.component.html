@@ -23,10 +23,10 @@
 
       <mat-form-field appearance="standard" fxFlex>
         <mat-label>Contact Number</mat-label>
-        <input matInput formControlName="contactNumber" required>
-        <mat-error *ngIf="signupForm.controls.contactNumber.touched && signupForm.controls.contactNumber.invalid">
-          <span *ngIf="signupForm.controls.contactNumber.errors.required">This  field is mendetory</span>
-          <span *ngIf="signupForm.controls.contactNumber.errors.pattern">This  field is invalid</span>
+        <input matInput formControlName="contact_number" required>
+        <mat-error *ngIf="signupForm.controls.contact_number.touched && signupForm.controls.contact_number.invalid">
+          <span *ngIf="signupForm.controls.contact_number.errors.required">This  field is mendetory</span>
+          <span *ngIf="signupForm.controls.contact_number.errors.pattern">This  field is invalid</span>
         </mat-error>
       </mat-form-field>
 
@@ -54,21 +54,21 @@
       </mat-form-field>
 
 
+
       <mat-form-field appearance="standard" fxFlex>
         <mat-label>Confirm Password</mat-label>
-        <input matInput formControlName="confirmPassword" type="password" required [type]="confirmPassword ?'password':'text'">
+        <input matInput formControlName="confirmPassword" type="password" required [type]="confirmPassword ? 'password':'text'">
         <button type="button" mat-icon-button matSuffix (click)="confirmPassword = !confirmPassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="confirmPassword">
           <mat-icon>
             {{confirmPassword?'visibility_off' : 'visibility'}}
           </mat-icon>
         </button>
-
         <mat-error *ngIf="signupForm.controls.confirmPassword.touched && signupForm.controls.confirmPassword.invalid">
           <span *ngIf="signupForm.controls.confirmPassword.errors.required">This  field is mendetory</span>
         </mat-error>
-<!--        <mat-hint *ngIf="validateSubmit() && !(signupForm.controls.confirmPassword.invalid)">-->
-<!--          <span>New Password & Confirm Password does not Match</span>-->
-<!--        </mat-hint>-->
+        <mat-hint *ngIf="validateSubmit() && !(signupForm.controls.confirmPassword.invalid)">
+          <span>New Password & Confirm Password does not Match</span>
+        </mat-hint>
 
       </mat-form-field>
 
@@ -77,10 +77,10 @@
   </form>
 </mat-dialog-content>
 
-<!--<mat-dialog-actions align="end">-->
-<!--  <button mat-raised-button color="primary" type="submit" (click)="handleSubmit()" [disabled]="validateSubmit() || !(signupForm.valid && signupForm.dirty)">-->
-<!--    <mat-icon>Save</mat-icon> Signup-->
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="accent" type="submit" (click)="handleSubmit()" [disabled]="validateSubmit() || !(signupForm.valid && signupForm.dirty)">
+    <mat-icon>save</mat-icon> Signup
 
-<!--  </button>-->
-<!--&lt;!&ndash;  <button mat-raised-button color="warm" mat-dialog-close><mat-icon>cancel</mat-icon>Close</button>&ndash;&gt;-->
-<!--</mat-dialog-actions>-->
+  </button>
+  <button mat-raised-button color="warm" mat-dialog-close><mat-icon>cancel</mat-icon>Close</button>
+</mat-dialog-actions>

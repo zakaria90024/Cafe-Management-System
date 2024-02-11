@@ -33,11 +33,11 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         //|/user/signup
-        if (request.getServletPath().matches("/user/login|/user/forgotPassword")) {
+        if (request.getServletPath().matches("/user/login|/user/signup|/user/forgotPassword")) {
             filterChain.doFilter(request, response);
-            System.out.println("call if");
+            System.out.println("call without auth");
         } else {
-            System.out.println("call this");
+            System.out.println("call else with auth");
             String authorizationHeader = request.getHeader("Authorization");
             String token = null;
             if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
