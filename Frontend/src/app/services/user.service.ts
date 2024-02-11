@@ -30,4 +30,12 @@ export class UserService {
       // headers: new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', 'Bearer ' + token)
     });
   }
+
+  login(data: any) {
+    return this.httpClient.post(this.url + "/user/login", data, {
+      headers: new HttpHeaders().set('Content-Type', 'application/json')
+      // You can remove the following line that sets the token
+      // headers: new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', 'Bearer ' + token)
+    });
+  }
 }
