@@ -9,4 +9,6 @@ export class GlobalConstants{
 
   //Variable
   public static error:string = "error";
+
+  public static unauthroized:string = "You are not authorize person for access";
 }

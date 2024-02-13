@@ -38,4 +38,13 @@ export class UserService {
       // headers: new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', 'Bearer ' + token)
     });
   }
+
+  checkToken() {
+    return this.httpClient.get(this.url + "/user/checkToken")
+      //headers: new HttpHeaders().set('Content-Type', 'application/json')
+      // You can remove the following line that sets the token
+      // headers: new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', 'Bearer ' + token)
+    //});
+  }
+
 }
