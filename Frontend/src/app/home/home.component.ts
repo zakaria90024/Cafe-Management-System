@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
       console.log(error)
     })
   }
+  
 
   handleSignupAction(){
     const dialogConfig = new MatDialogConfig();
