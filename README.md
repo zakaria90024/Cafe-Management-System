@@ -1,2 +1,2 @@
 Spring boot application
-Angualr 
+Angualr Java
