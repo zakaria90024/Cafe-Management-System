@@ -20,7 +20,7 @@ public interface UserRest {
     @PostMapping(path = "/login") //call login link
     public ResponseEntity<String> login(@RequestBody(required = true) Map<String, String> requestMap);
 
-    @GetMapping(path = "/users")
+    @GetMapping(path = "/users")//call this api link
     public ResponseEntity<List<UserWrapper>> getAllUser();
 
     @PostMapping(path = "/updatestatus")
