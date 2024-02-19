@@ -13,6 +13,7 @@ import {NgxUiLoaderService} from "ngx-ui-loader";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  hide = true;
   password = true;
   loginForm: any = FormGroup;
   responseMessage: any;
@@ -48,7 +49,7 @@ export class LoginComponent implements OnInit {
     this.userService.login(data).subscribe((response: any) => {
         this.ngxService.stop();
         this.dialogRef.close();
-        this.responseMessage = response?.message;
+        this.responseMessage = response.message;
         this.snackbarService.openSnackBar(this.responseMessage, "");
         localStorage.setItem('token', response.token);
         this.router.navigate(['/cafe/dashboard']);
