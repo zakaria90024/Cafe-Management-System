@@ -29,7 +29,7 @@ export class TokenInterceptorInterceptor implements HttpInterceptor {
         if (err instanceof HttpErrorResponse) {
           console.log(err.url);
           if (err.status === 401 || err.status === 403) {
-            if (this.router.url !== '/') {
+            if (this.router.url === '/') {
               localStorage.clear();
               this.router.navigate(['/']);
             }

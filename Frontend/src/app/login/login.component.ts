@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {GlobalConstants} from "../shared/global-constants";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
@@ -49,10 +49,11 @@ export class LoginComponent implements OnInit {
     this.userService.login(data).subscribe((response: any) => {
         this.ngxService.stop();
         this.dialogRef.close();
-        this.responseMessage = response.message;
-        this.snackbarService.openSnackBar(this.responseMessage, "");
-        localStorage.setItem('token', response.token);
+        localStorage.setItem("token", response.token);
         this.router.navigate(['/cafe/dashboard']);
+        this.responseMessage = response.message;
+        this.snackbarService.openSnackBar(""+response.token, "dfsd");
+
 
       }, (error) => {
         this.ngxService.stop();
