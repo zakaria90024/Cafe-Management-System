@@ -18,7 +18,7 @@ import java.io.Serializable;
 @DynamicUpdate
 @DynamicInsert
 @Table(name = "bill")
-public class Bill implements Serializable {
+public class Bill implements Serializable {//test
 
     private static final long longSerialVersionUID = 41L;
 
