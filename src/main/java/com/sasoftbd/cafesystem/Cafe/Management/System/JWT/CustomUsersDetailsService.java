@@ -31,7 +31,7 @@ public class CustomUsersDetailsService implements UserDetailsService {
     }
 
     public User getUserDetail(){
-        return userDetail;
+        return userDetail;//get usr details
 
 //        User user = userDetail;
 //        user.setPassword(null);
