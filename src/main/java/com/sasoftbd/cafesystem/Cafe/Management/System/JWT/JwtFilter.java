@@ -35,7 +35,7 @@ public class JwtFilter extends OncePerRequestFilter {
         //|/user/signup
         if (request.getServletPath().matches("/user/login|/user/signup|/user/forgotPassword")) {
             filterChain.doFilter(request, response);
-            System.out.println("call without auth");
+            System.out.println("call without auth");//call with auth
         } else {
             System.out.println("call else with auth");
             String authorizationHeader = request.getHeader("Authorization");
