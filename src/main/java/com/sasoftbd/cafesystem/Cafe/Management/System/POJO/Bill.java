@@ -23,7 +23,7 @@ public class Bill implements Serializable {
     private static final long longSerialVersionUID = 41L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)//hellot
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
