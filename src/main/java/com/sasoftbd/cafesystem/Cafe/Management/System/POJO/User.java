@@ -21,7 +21,7 @@ import java.util.ArrayList;
 @DynamicInsert
 @Table(name = "user")
 public class User implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;//gp
     ArrayList<Object> objects = new ArrayList<>();
 
     @Id
