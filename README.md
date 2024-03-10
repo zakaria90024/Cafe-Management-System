@@ -1,3 +1,3 @@
 Spring boot application
-Angualr core Java 
+Angualr core NG Java 
 API Development
