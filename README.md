@@ -1,4 +1,4 @@
-Spring boot application\n
+Spring boot application
 Angualr core NG Java 
 API Development
 MysqlDB
