@@ -1,4 +1,4 @@
 Spring boot application
 Angualr core NG Java 
 API Development
-Mysql-DB ff
+Mysql-DB
